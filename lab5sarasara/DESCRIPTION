@@ -1,9 +1,10 @@
 Package: lab5sarasara
 Type: Package
 Title: What the package does (short line)
-Version: 1.0
+Version: 0.0.1
 Date: 2017-09-25
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
+Author: Sara Jesperson [aut, cre],
+        Sara Johansson [aut, cre]
+Maintainer: Sara Jesperson <sarje110@student.liu.se>
 Description: More about what it does (maybe more than one line)
-License: What license is it under?
+License: GPL-2
