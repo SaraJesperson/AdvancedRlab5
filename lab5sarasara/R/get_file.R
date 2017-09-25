@@ -14,4 +14,3 @@ get_file<- function(x){
   result<-list(file=path, table=read.csv2(file, stringsAsFactors=FALSE))
   return(result)
 }
-
