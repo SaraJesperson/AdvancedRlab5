@@ -1,6 +1,11 @@
-
+#' @title Obtain election files
+#' @description A function to obtain election files from the Swedish election 2014
+#' @param x Number specifying which file to get where x is between 1 and 18 and of length one
+#' @return A list containing the file name and a data frame of the file
 
 get_file<- function(x){
+  if(!(x %in% 1:18 && length(x)==1)) stop("argument x is invalid")
+  
   require(stringr)
   require(XML)
   
@@ -20,4 +25,5 @@ get_file<- function(x){
   result<-list(file=path, table=read.csv2(file, stringsAsFactors=FALSE))
   return(result)
 }
+
 
