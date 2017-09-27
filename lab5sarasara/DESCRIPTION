@@ -8,3 +8,6 @@ Author: Sara Jesperson [aut, cre],
 Maintainer: Sara Jesperson <sarje110@student.liu.se>
 Description: More about what it does (maybe more than one line)
 License: GPL-2
+Imports: XML, stringr
+Suggests: ggplot2
+
