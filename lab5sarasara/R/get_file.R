@@ -24,8 +24,6 @@ get_file<- function(x){
   path<-files[x]
   file<-paste(base, path, sep="")
   
-  result<-list(file=path, table=read.csv2(file, stringsAsFactors=FALSE))
+  result<-list(file=file, table=read.csv2(file, stringsAsFactors=FALSE))
   return(result)
 }
-
-
