@@ -5,12 +5,9 @@
 
 get_file<- function(x){
   if(!(x %in% 1:18 && length(x)==1)) stop("argument x is invalid")
-  
-  requireNamespace(stringr)
-  requireNamespace(XML)
-  
-  links<-getHTMLLinks("http://www.val.se/val/val2014/statistik/index.html")
-  files<-links[str_detect(links,".skv")]
+
+  links<-XML::getHTMLLinks("http://www.val.se/val/val2014/statistik/index.html")
+  files<-links[stringr::str_detect(links,".skv")]
   
   if(x %in% 14:18){
     base<-"http://www.val.se"

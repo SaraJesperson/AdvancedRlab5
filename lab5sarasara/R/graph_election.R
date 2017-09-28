@@ -7,6 +7,7 @@
 #' @export graph_election
 
 graph_election <- function(municipality, election_type){
+  if(length(election_type)!=1 || length(municipality)!=1) stop("argument(s) must be of length 1")
   if(!(election_type %in% c("Riksdagsval", "Landstingsval", "Kommunval"))) stop("election_type argument is invalid")
   
   requireNamespace(ggplot2)

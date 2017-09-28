@@ -7,6 +7,7 @@
 #' @export election
 
 election <- function(election, type){
+  if(length(election)!=1 || length(type)!=1) stop("argument(s) must be of length 1")
   if(!(election %in% c("Riksdagsval", "Landstingsval", "Kommunval"))) stop("election argument is invalid")
   if(!(type %in% c("Kommun", "Valdistrikt"))) stop("type argument is invalid")
   if(type=="Kommun"){

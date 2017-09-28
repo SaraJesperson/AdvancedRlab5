@@ -5,7 +5,9 @@
 #' @export voters
 
 voters<-function(election){
+  if(length(election)!=1) stop("election argument must be of length 1")
   if(!(election %in% c("Riksdagsval", "Landstingsval", "Kommunval"))) stop("election argument is invalid")
+  
   if(election=="Riksdagsval"){
     x<-16
   } else if (type=="Landstingsval"){
