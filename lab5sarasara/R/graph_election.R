@@ -9,7 +9,7 @@
 graph_election <- function(municipality, election_type){
   if(!(election_type %in% c("Riksdagsval", "Landstingsval", "Kommunval"))) stop("election_type argument is invalid")
   
-  require(ggplot2)
+  requireNamespace(ggplot2)
 
   y <- election(election=election_type, type="Kommun")$table
 
