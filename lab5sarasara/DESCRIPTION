@@ -1,12 +1,12 @@
 Package: lab5sarasara
 Type: Package
-Title: What the package does (short line)
+Title: Election results of the Swedish election 2014
 Version: 0.0.1
 Date: 2017-09-25
 Author: Sara Jesperson [aut, cre],
         Sara Johansson [aut, cre]
 Maintainer: Sara Jesperson <sarje110@student.liu.se>
-Description: More about what it does (maybe more than one line)
+Description: A package containing functions to investigate the election results of the Swedish election 2014
 License: GPL-2
 Imports: XML, stringr
 Suggests: ggplot2, testthat
