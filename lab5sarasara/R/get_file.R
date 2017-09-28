@@ -12,6 +12,8 @@ get_file<- function(x){
   links<-getHTMLLinks("http://www.val.se/val/val2014/statistik/index.html")
   files<-links[str_detect(links,".skv")]
   
+  
+  
   if(x %in% 14:18){
     base<-"http://www.val.se"
   } else if(x %in% 11:13){
