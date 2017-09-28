@@ -96,12 +96,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 riksdagsval_kommun[[<span class="dv">1</span>]] <span class="co"># Link name</span></code></pre></div>
 <pre><code>[1] &quot;http://www.val.se/val/val2014/statistik/2014_riksdagsval_per_kommun.skv&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">riksdagsval_kommun[[<span class="dv">2</span>]][<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">10</span>] <span class="co"># Subset of the data</span></code></pre></div>
-<pre><code>  LAN KOM          LÄN     KOMMUN M.tal M.proc C.tal C.proc FP.tal FP.proc
-1  10  82 Blekinge län  Karlshamn  3923  18.69  1015   4.84    616    2.93
-2  10  80 Blekinge län Karlskrona  8848  20.71  2493   5.83   2225    5.21
-3  10  60 Blekinge län  Olofström  1123  13.41   473   5.65    168    2.01
-4  10  81 Blekinge län    Ronneby  3335  17.84  1289   6.89    653    3.49
-5  10  83 Blekinge län Sölvesborg  2595  22.69   522   4.56    322    2.81</code></pre>
+<pre><code>  LAN KOM          L.c4.N        KOMMUN M.tal M.proc C.tal C.proc FP.tal
+1  10  82 Blekinge l&lt;e4&gt;n     Karlshamn  3923  18.69  1015   4.84    616
+2  10  80 Blekinge l&lt;e4&gt;n    Karlskrona  8848  20.71  2493   5.83   2225
+3  10  60 Blekinge l&lt;e4&gt;n  Olofstr&lt;f6&gt;m  1123  13.41   473   5.65    168
+4  10  81 Blekinge l&lt;e4&gt;n       Ronneby  3335  17.84  1289   6.89    653
+5  10  83 Blekinge l&lt;e4&gt;n S&lt;f6&gt;lvesborg  2595  22.69   522   4.56    322
+  FP.proc
+1    2.93
+2    5.21
+3    2.01
+4    3.49
+5    2.81</code></pre>
 </div>
 <div id="voters" class="section level2">
 <h2>Voters</h2>
@@ -144,18 +150,18 @@ voters_parl[[<span class="dv">1</span>]] <span class="co"># Link name</span></co
 3        1801303     Maria 3 Mariatorget V
 4        1801304       Maria 4 Bergsgruvan
 5        1801305     Maria 5 Mariatorget S
-  Män.Svenska.medborgare.18.29.förstagångsväljare
-1                                              29
-2                                              26
-3                                              14
-4                                              25
-5                                              38
-  Kvinnor.Svenska.medborgare.18.29.förstagångsväljare
-1                                                  27
-2                                                  34
-3                                                  17
-4                                                  22
-5                                                  41</code></pre>
+  M.e4.n.Svenska.medborgare.18.29.f.f6.rstag.e5.ngsv.e4.ljare
+1                                                          29
+2                                                          26
+3                                                          14
+4                                                          25
+5                                                          38
+  Kvinnor.Svenska.medborgare.18.29.f.f6.rstag.e5.ngsv.e4.ljare
+1                                                           27
+2                                                           34
+3                                                           17
+4                                                           22
+5                                                           41</code></pre>
 </div>
 <div id="plot-the-election-results" class="section level2">
 <h2>Plot the election results</h2>
