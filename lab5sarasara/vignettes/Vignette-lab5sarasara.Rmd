@@ -1,0 +1,185 @@
+---
+title: "Vignette-lab5sarasara"
+author: "Sara Jesperson and Sara Johansson"
+date: "r Sys.Date()"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This package can be used to investigate the Swedish election 2014 in R. The package has functions to easily download files from the API of the Swedish election agency and also plot the election results in a chosen municipality.
+
+```{r,echo=FALSE}
+get_file<- function(x){
+  if(!(x %in% 1:18 && length(x)==1)) stop("argument x is invalid")
+
+  links<-XML::getHTMLLinks("http://www.val.se/val/val2014/statistik/index.html")
+  files<-links[stringr::str_detect(links,".skv")]
+  
+  if(x %in% 14:18){
+    base<-"http://www.val.se"
+  } else if(x %in% 11:13){
+    base <- ""
+  } else{
+    base<-"http://www.val.se/val/val2014/statistik/"
+  }
+  path<-files[x]
+  file<-paste(base, path, sep="")
+  
+  result<-list(file=file, table=read.csv2(file, stringsAsFactors=FALSE))
+  return(result)
+}
+```
+
+
+## Election
+
+```{r,echo=FALSE}
+election <- function(election, type){
+  if(length(election)!=1 || length(type)!=1) stop("argument(s) must be of length 1")
+  if(!(election %in% c("Riksdagsval", "Landstingsval", "Kommunval"))) stop("election argument is invalid")
+  if(!(type %in% c("Kommun", "Valdistrikt"))) stop("type argument is invalid")
+  if(type=="Kommun"){
+    if(election=="Riksdagsval"){
+      x<-1
+    } else if (type=="Landstingsval"){
+      x<-3
+    } else {
+      x<-5
+    }
+  } else {
+    if(election=="Riksdagsval"){
+      x<-2
+    } else if (type=="Landstingsval"){
+      x<-4
+    } else {
+      x<-6
+    }
+  }
+  get_file(x)
+}
+```
+
+The `election()` function is an easy way to download files from the Swedish election API containing the election results for the tree election types 2014. The function has two arguments: election and type.
+
+The argumnet election states which one of the three elections you want to investigate. You can only choose on type of election at a time and the argument has three allowed values:
+
+* "Riksdagsval" is chosen if you want the results from the parliamentary elections
+* "Landstingsval" is chosen if you want the results from the county elections
+* "Kommunval" is chosen if you want the results from the municipal elections
+
+The argument type specifies the level the results should be presented in. You can only choose one type at a time and the argumnet has two allowed values:
+
+* "Kommun" is chosen if you want the results for the municipalities
+* "Valdistrikt" is chosen if you want the results for the electoral districts
+
+The results of the function is presented in a list. The first object is a string containing the file link from the API and the second object is a data frame containing the results.
+
+Below is an example of how the function can be used.
+
+```{r,comment=NA}
+riksdagsval_kommun <- election(election="Riksdagsval", type="Kommun")
+
+riksdagsval_kommun[[1]] # Link name
+riksdagsval_kommun[[2]][1:5,1:10] # Subset of the data
+```
+
+
+##Voters
+
+```{r}
+voters<-function(election){
+  if(length(election)!=1) stop("election argument must be of length 1")
+  if(!(election %in% c("Riksdagsval", "Landstingsval", "Kommunval"))) stop("election argument is invalid")
+  
+  if(election=="Riksdagsval"){
+    x<-16
+  } else if (type=="Landstingsval"){
+    x<-17
+  } else {
+    x<-18
+  }
+  get_file(x)
+}
+```
+
+The `voters()` function is used to download files from the Swedish election API containing information about the voters in the Swedish election 2014 in an aggregated format.
+
+The function has one argumnet, election, that states which one of the three election types you want to investigate. You can only choose on type of election at a time and the argument has three allowed values:
+
+* "Riksdagsval" is chosen if you want the results from the parliamentary elections
+* "Landstingsval" is chosen if you want the results from the county elections
+* "Kommunval" is chosen if you want the results from the municipal elections
+
+The results of the function is presented in a list. The first object is a string containing the file link from the API and the second object is a data frame containing the results.
+
+Below is an example of how the function can be used.
+
+```{r, comment=NA}
+voters_parl <- voters(election="Riksdagsval")
+
+voters_parl[[1]] # Link name
+voters_parl[[2]][1:5,1:8] # Subset of the data
+```
+
+##Plot the election results
+
+```{r, echo=FALSE}
+graph_election <- function(municipality, election_type){
+  if(length(election_type)!=1 || length(municipality)!=1) stop("argument(s) must be of length 1")
+  if(!(election_type %in% c("Riksdagsval", "Landstingsval", "Kommunval"))) stop("election_type argument is invalid")
+  
+  require(ggplot2)
+
+  y <- election(election=election_type, type="Kommun")$table
+
+  if(!municipality %in% y$KOMMUN) stop("municipality argument is invalid")  
+  
+  y <- t(y[y$KOMMUN == municipality,
+           colnames(y) %in% c("M.proc","C.proc","FP.proc","KD.proc","S.proc","V.proc","MP.proc","SD.proc","FI.proc")])
+  
+  y <- data.frame(Party=c("Moderaterna",
+                          "Centerpartiet",
+                          "Folkpartiet",
+                          "Kristedemokraterna",
+                          "Socialdemokraterna",
+                          "Vansterpartiet",
+                          "Miljopartiet",
+                          "Sverigedemokraterna",
+                          "Feministiskt Initiativ"),
+                  Percent=y[,1])
+  
+  ggplot(data=y, aes(x=reorder(Party, Percent), y=Percent)) + 
+    geom_bar(stat="identity", fill="darkslategray4") +
+    coord_flip() +
+    theme_bw() +
+    labs(title=paste0("Election results 2014 in municipality ", municipality),
+         subtitle=election_type,
+         x="") +
+    theme(plot.title = element_text(hjust=0.5, size=16),
+          plot.subtitle = element_text(hjust = 0.5, size=14, face="italic"),
+          axis.text = element_text(size=12)
+    )
+}
+```
+
+
+The function `graph_election()` can be used to plot the results from the Swedish election 2014 for a specific municipality. The function generates a bar chart showing the percentages of the nine biggest parties in Sweden. The function has two arguments: municipality and election_type.
+
+The argument municipality specifies the municipality you want to plot. The allowed values of this argument  are the names of the Swedish municipalities as a character vector of length one. The municiality you want to chose must be spelled with a capital letter. You can only plot one municipality at a time.
+
+The argumnet election_type states which one of the three elections you want to investigate. You can only choose on type of election at a time and the argument has three allowed values:
+
+* "Riksdagsval" is chosen if you want the results from the parliamentary elections
+* "Landstingsval" is chosen if you want the results from the county elections
+* "Kommunval" is chosen if you want the results from the municipal elections
+
+Below is an example where the results in the municipal election in Motala 2014.
+
+```{r,message=FALSE, warning=FALSE, fig.align='center', fig.height=4, fig.width=7}
+graph_election(municipality="Motala", election_type="Kommunval")
+```
+
+####Now you hopefully have all the necessary knowledge to get started with the lab5sarasara package. Have fun!

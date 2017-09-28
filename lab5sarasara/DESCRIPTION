@@ -9,5 +9,9 @@ Maintainer: Sara Jesperson <sarje110@student.liu.se>
 Description: A package containing functions to investigate the election results of the Swedish election 2014.
 License: GPL-2
 Imports: XML, stringr
-Suggests: ggplot2, testthat
+Suggests: ggplot2, 
+  testthat, 
+  knitr,
+  rmarkdown
 RoxygenNote: 6.0.1
+VignetteBuilder: knitr
