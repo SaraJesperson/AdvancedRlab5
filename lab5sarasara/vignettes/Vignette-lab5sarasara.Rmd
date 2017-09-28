@@ -182,4 +182,4 @@ Below is an example where the results in the municipal election in Motala 2014.
 graph_election(municipality="Motala", election_type="Kommunval")
 ```
 
-####Now you hopefully have all the necessary knowledge to get started with the lab5sarasara package. Have fun!
+#####Now you have all the necessary knowledge to get started with the lab5sarasara package. Have fun!
