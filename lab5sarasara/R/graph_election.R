@@ -9,8 +9,7 @@
 graph_election <- function(municipality, election_type){
   if(length(election_type)!=1 || length(municipality)!=1) stop("argument(s) must be of length 1")
   if(!(election_type %in% c("Riksdagsval", "Landstingsval", "Kommunval"))) stop("election_type argument is invalid")
-  
-  requireNamespace(ggplot2)
+
 
   y <- election(election=election_type, type="Kommun")$table
 
@@ -30,14 +29,14 @@ graph_election <- function(municipality, election_type){
                           "Feministiskt Initiativ"),
                   Percent=y[,1])
   
-  ggplot(data=y, aes(x=reorder(Party, Percent), y=Percent)) + 
-    geom_bar(stat="identity", fill="darkslategray4") +
-    coord_flip() +
-    theme_bw() +
-    labs(title=paste0("Election results 2014 in municipality ", municipality),
+  ggplot2::ggplot(data=y, aes(x=reorder(Party, Percent), y=Percent)) + 
+    ggplot2::geom_bar(stat="identity", fill="darkslategray4") +
+    ggplot2::coord_flip() +
+    ggplot2::theme_bw() +
+    ggplot2::labs(title=paste0("Election results 2014 in municipality ", municipality),
          subtitle=election_type,
          x="") +
-    theme(plot.title = element_text(hjust=0.5, size=16),
+    ggplot2::theme(plot.title = element_text(hjust=0.5, size=16),
           plot.subtitle = element_text(hjust = 0.5, size=14, face="italic"),
           axis.text = element_text(size=12)
     )
