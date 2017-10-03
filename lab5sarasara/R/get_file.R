@@ -28,6 +28,3 @@ get_file<- function(x){
   return(result)
 }
 
-#ö: .f6.
-#å: .e5.
-#ä: .e4.
