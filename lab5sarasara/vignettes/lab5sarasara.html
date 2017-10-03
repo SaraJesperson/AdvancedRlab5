@@ -98,19 +98,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 <div id="voters" class="section level2">
 <h2>Voters</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">voters&lt;-function(election){
-  if(<span class="kw">length</span>(election)!=<span class="dv">1</span>) <span class="kw">stop</span>(<span class="st">&quot;election argument must be of length 1&quot;</span>)
-  if(!(election %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Riksdagsval&quot;</span>, <span class="st">&quot;Landstingsval&quot;</span>, <span class="st">&quot;Kommunval&quot;</span>))) <span class="kw">stop</span>(<span class="st">&quot;election argument is invalid&quot;</span>)
-  
-  if(election==<span class="st">&quot;Riksdagsval&quot;</span>){
-    x&lt;-<span class="dv">16</span>
-  } else if (type==<span class="st">&quot;Landstingsval&quot;</span>){
-    x&lt;-<span class="dv">17</span>
-  } else {
-    x&lt;-<span class="dv">18</span>
-  }
-  <span class="kw">get_file</span>(x)
-}</code></pre></div>
 <p>The <code>voters()</code> function is used to download files from the Swedish election API containing information about the voters in the Swedish election 2014 in an aggregated format.</p>
 <p>The function has one argumnet, election, that states which one of the three election types you want to investigate. You can only choose on type of election at a time and the argument has three allowed values:</p>
 <ul>
