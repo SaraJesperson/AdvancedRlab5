@@ -2,9 +2,9 @@ context("election")
 
 
 test_that("Collects the correct files", {
-  expect_output(str(election("Riksdagsval","Kommun")[[2]][12:13,24]), "0.49 0.96")
-  expect_output(str(election("Landstingsval","Valdistrikt")[[2]][12:13,23]), "1 2")
-  expect_output(str(election("Kommunval","Kommun")[[2]][35:37,7]), "365 862 2760")
+  expect_output(str(election("Riksdagsval","Kommun")[[2]]), "290 obs.")
+  expect_output(str(election("Landstingsval","Kommun")[[2]]), "526 variables")
+  expect_output(str(election("Kommunval","Kommun")[[2]]), "14 15 17 20")
 })
 
 
