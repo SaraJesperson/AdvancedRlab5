@@ -6,6 +6,7 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
   %\usepackage[utf8]{inputenc}
 ---
 
@@ -86,10 +87,10 @@ The results of the function is presented in a list. The first object is a string
 Below is an example of how the function can be used.
 
 ```{r,comment=NA}
-riksdagsval_kommun <- election(election="Riksdagsval", type="Kommun")
-
-riksdagsval_kommun[[1]] # Link name
-riksdagsval_kommun[[2]][1:5,1:10] # Subset of the data
+# riksdagsval_kommun <- election(election="Riksdagsval", type="Kommun")
+# 
+# riksdagsval_kommun[[1]] # Link name
+# riksdagsval_kommun[[2]][1:5,1:10] # Subset of the data
 ```
 
 
