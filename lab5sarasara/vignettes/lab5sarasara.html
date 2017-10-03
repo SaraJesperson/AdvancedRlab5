@@ -12,7 +12,7 @@
 
 <meta name="author" content="Vignette Author" />
 
-<meta name="date" content="2017-10-02" />
+<meta name="date" content="2017-10-03" />
 
 <title>Vignette Title</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Vignette Title</h1>
 <h4 class="author"><em>Vignette Author</em></h4>
-<h4 class="date"><em>2017-10-02</em></h4>
+<h4 class="date"><em>2017-10-03</em></h4>
 
 
 
@@ -96,34 +96,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 riksdagsval_kommun[[<span class="dv">1</span>]] <span class="co"># Link name</span></code></pre></div>
 <pre><code>[1] &quot;http://www.val.se/val/val2014/statistik/2014_riksdagsval_per_kommun.skv&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">riksdagsval_kommun[[<span class="dv">2</span>]][<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">10</span>] <span class="co"># Subset of the data</span></code></pre></div>
-<pre><code>  LAN KOM          L.c4.N        KOMMUN M.tal M.proc C.tal C.proc FP.tal
-1  10  82 Blekinge l&lt;e4&gt;n     Karlshamn  3923  18.69  1015   4.84    616
-2  10  80 Blekinge l&lt;e4&gt;n    Karlskrona  8848  20.71  2493   5.83   2225
-3  10  60 Blekinge l&lt;e4&gt;n  Olofstr&lt;f6&gt;m  1123  13.41   473   5.65    168
-4  10  81 Blekinge l&lt;e4&gt;n       Ronneby  3335  17.84  1289   6.89    653
-5  10  83 Blekinge l&lt;e4&gt;n S&lt;f6&gt;lvesborg  2595  22.69   522   4.56    322
-  FP.proc
-1    2.93
-2    5.21
-3    2.01
-4    3.49
-5    2.81</code></pre>
+<pre><code>  LAN KOM        LAN.1     KOMMUN M.tal M.proc C.tal C.proc FP.tal FP.proc
+1  10  82 Blekinge lan  Karlshamn  3923  18.69  1015   4.84    616    2.93
+2  10  80 Blekinge lan Karlskrona  8848  20.71  2493   5.83   2225    5.21
+3  10  60 Blekinge lan  Olofstrom  1123  13.41   473   5.65    168    2.01
+4  10  81 Blekinge lan    Ronneby  3335  17.84  1289   6.89    653    3.49
+5  10  83 Blekinge lan Solvesborg  2595  22.69   522   4.56    322    2.81</code></pre>
 </div>
 <div id="voters" class="section level2">
 <h2>Voters</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">voters&lt;-function(election){
-  if(<span class="kw">length</span>(election)!=<span class="dv">1</span>) <span class="kw">stop</span>(<span class="st">&quot;election argument must be of length 1&quot;</span>)
-  if(!(election %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Riksdagsval&quot;</span>, <span class="st">&quot;Landstingsval&quot;</span>, <span class="st">&quot;Kommunval&quot;</span>))) <span class="kw">stop</span>(<span class="st">&quot;election argument is invalid&quot;</span>)
-  
-  if(election==<span class="st">&quot;Riksdagsval&quot;</span>){
-    x&lt;-<span class="dv">16</span>
-  } else if (type==<span class="st">&quot;Landstingsval&quot;</span>){
-    x&lt;-<span class="dv">17</span>
-  } else {
-    x&lt;-<span class="dv">18</span>
-  }
-  <span class="kw">get_file</span>(x)
-}</code></pre></div>
 <p>The <code>voters()</code> function is used to download files from the Swedish election API containing information about the voters in the Swedish election 2014 in an aggregated format.</p>
 <p>The function has one argumnet, election, that states which one of the three election types you want to investigate. You can only choose on type of election at a time and the argument has three allowed values:</p>
 <ul>
@@ -133,35 +114,10 @@ riksdagsval_kommun[[<span class="dv">1</span>]] <span class="co"># Link name</sp
 </ul>
 <p>The results of the function is presented in a list. The first object is a string containing the file link from the API and the second object is a data frame containing the results.</p>
 <p>Below is an example of how the function can be used.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">voters_parl &lt;-<span class="st"> </span><span class="kw">voters</span>(<span class="dt">election=</span><span class="st">&quot;Riksdagsval&quot;</span>)
-
-voters_parl[[<span class="dv">1</span>]] <span class="co"># Link name</span></code></pre></div>
-<pre><code>[1] &quot;http://www.val.se/val/val2014/alkon/R/rostberattigade.skv&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">voters_parl[[<span class="dv">2</span>]][<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>] <span class="co"># Subset of the data</span></code></pre></div>
-<pre><code>  riksdagsvalkrets_id riksdagsvalkrets_namn kommun_id kommun_namn
-1                   1     Stockholms kommun       180   Stockholm
-2                   1     Stockholms kommun       180   Stockholm
-3                   1     Stockholms kommun       180   Stockholm
-4                   1     Stockholms kommun       180   Stockholm
-5                   1     Stockholms kommun       180   Stockholm
-  valdistrikt_id          valdistrikt_namn
-1        1801301 Maria 1 Ivar Lo:s park mm
-2        1801302     Maria 2 Mariaberget V
-3        1801303     Maria 3 Mariatorget V
-4        1801304       Maria 4 Bergsgruvan
-5        1801305     Maria 5 Mariatorget S
-  Man.Svenska.medborgare.18.29.forstagangsvaljare
-1                                              29
-2                                              26
-3                                              14
-4                                              25
-5                                              38
-  Kvinnor.Svenska.medborgare.18.29.forstagangsvaljare
-1                                                  27
-2                                                  34
-3                                                  17
-4                                                  22
-5                                                  41</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># voters_parl &lt;- voters(election=&quot;Riksdagsval&quot;)</span>
+<span class="co"># </span>
+<span class="co"># voters_parl[[1]] # Link name</span>
+<span class="co"># voters_parl[[2]][1:5,1:8] # Subset of the data</span></code></pre></div>
 </div>
 <div id="plot-the-election-results" class="section level2">
 <h2>Plot the election results</h2>
@@ -174,8 +130,7 @@ voters_parl[[<span class="dv">1</span>]] <span class="co"># Link name</span></co
 <li>“Kommunval” is chosen if you want the results from the municipal elections</li>
 </ul>
 <p>Below is an example where the results in the municipal election in Motala 2014.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">graph_election</span>(<span class="dt">municipality=</span><span class="st">&quot;Motala&quot;</span>, <span class="dt">election_type=</span><span class="st">&quot;Kommunval&quot;</span>)</code></pre></div>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># graph_election(municipality=&quot;Motala&quot;, election_type=&quot;Kommunval&quot;)</span></code></pre></div>
 <div id="now-you-have-all-the-necessary-knowledge-to-get-started-with-the-lab5sarasara-package.-have-fun" class="section level5">
 <h5>Now you have all the necessary knowledge to get started with the lab5sarasara package. Have fun!</h5>
 </div>

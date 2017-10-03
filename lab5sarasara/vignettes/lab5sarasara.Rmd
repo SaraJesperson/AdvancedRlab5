@@ -29,15 +29,21 @@ get_file<- function(x){
   path<-files[x]
   file<-paste(base, path, sep="")
   
-  result<-list(file=file, table=read.csv2(file, stringsAsFactors=FALSE, encoding="UTF-8"))
+  result<-list(file=file, table=utils::read.csv2(file, stringsAsFactors=FALSE))
   
-  colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".f6.", replacement="o")
-  colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".e5.", replacement="a")
-  colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".e4.", replacement="a")
+  char_col <- result[[2]][, sapply(result[[2]], class) == 'character']
+  char_col <- apply(X = char_col, MARGIN = 2, FUN = iconv, from = "latin1", to = "ASCII//TRANSLIT")
+  char_col <- data.frame(apply(X = char_col, MARGIN = 2, FUN = iconv, from = "ASCII//TRANSLIT", to = "UTF-8"), stringsAsFactors = FALSE)
+  result[[2]][, sapply(result[[2]], class) == 'character'] <- char_col
+  colnames(result[[2]]) <- iconv(colnames(result[[2]]), "latin1", "ASCII//TRANSLIT")
+  colnames(result[[2]]) <- iconv(colnames(result[[2]]), "ASCII//TRANSLIT", "UTF-8")
+  
+  #colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".f6.", replacement="o")
+  #colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".e5.", replacement="a")
+  #colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".e4.", replacement="a")
   
   return(result)
 }
-
 ```
 
 
@@ -69,6 +75,14 @@ election <- function(election, type){
 }
 ```
 
+hej
+
+```{r}
+hej <- get_file(1)
+head(hej[[2]])
+```
+
+
 The `election()` function is an easy way to download files from the Swedish election API containing the election results for the tree election types 2014. The function has two arguments: election and type.
 
 The argumnet election states which one of the three elections you want to investigate. You can only choose on type of election at a time and the argument has three allowed values:
@@ -87,16 +101,16 @@ The results of the function is presented in a list. The first object is a string
 Below is an example of how the function can be used.
 
 ```{r,comment=NA}
-riksdagsval_kommun <- election(election="Riksdagsval", type="Kommun")
+#riksdagsval_kommun <- election(election="Riksdagsval", type="Kommun")
 
-riksdagsval_kommun[[1]] # Link name
-riksdagsval_kommun[[2]][1:5,1:10] # Subset of the data
+#riksdagsval_kommun[[1]] # Link name
+#riksdagsval_kommun[[2]][1:5,1:10] # Subset of the data
 ```
 
 
 ##Voters
 
-```{r}
+```{r, echo=FALSE}
 voters<-function(election){
   if(length(election)!=1) stop("election argument must be of length 1")
   if(!(election %in% c("Riksdagsval", "Landstingsval", "Kommunval"))) stop("election argument is invalid")
