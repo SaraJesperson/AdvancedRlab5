@@ -1,6 +1,7 @@
 #' @title Obtain election files
 #' @description A function to obtain election files from the Swedish parliamentary election 2014
 #' @return A data frame with the election result on municipality level
+#' @export get_file
 
 
 get_file<- function(){
