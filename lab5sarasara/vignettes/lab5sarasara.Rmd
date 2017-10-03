@@ -75,6 +75,14 @@ election <- function(election, type){
 }
 ```
 
+hej
+
+```{r}
+hej <- get_file(1)
+head(hej[[2]])
+```
+
+
 The `election()` function is an easy way to download files from the Swedish election API containing the election results for the tree election types 2014. The function has two arguments: election and type.
 
 The argumnet election states which one of the three elections you want to investigate. You can only choose on type of election at a time and the argument has three allowed values:
@@ -93,10 +101,10 @@ The results of the function is presented in a list. The first object is a string
 Below is an example of how the function can be used.
 
 ```{r,comment=NA}
-riksdagsval_kommun <- election(election="Riksdagsval", type="Kommun")
+#riksdagsval_kommun <- election(election="Riksdagsval", type="Kommun")
 
-riksdagsval_kommun[[1]] # Link name
-riksdagsval_kommun[[2]][1:5,1:10] # Subset of the data
+#riksdagsval_kommun[[1]] # Link name
+#riksdagsval_kommun[[2]][1:5,1:10] # Subset of the data
 ```
 
 
