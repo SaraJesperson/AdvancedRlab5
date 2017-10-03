@@ -6,7 +6,7 @@ output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
+  %\usepackage[utf8]{inputenc}
 ---
 
 This package can be used to investigate the Swedish election 2014 in R. The package has functions to easily download files from the API of the Swedish election agency and also plot the election results in a chosen municipality.
