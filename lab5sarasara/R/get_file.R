@@ -22,10 +22,11 @@ get_file<- function(x){
   result<-list(file=file, table=utils::read.csv2(file, stringsAsFactors=FALSE))
   
   char_col <- result[[2]][, sapply(result[[2]], class) == 'character']
-  char_col <- data.frame(apply(X = char_col, MARGIN = 2, FUN = iconv, from = "latin1", to = "ASCII//TRANSLIT"), stringsAsFactors = FALSE)
+  char_col <- apply(X = char_col, MARGIN = 2, FUN = iconv, from = "latin1", to = "ASCII//TRANSLIT")
+  char_col <- data.frame(apply(X = char_col, MARGIN = 2, FUN = iconv, from = "ASCII//TRANSLIT", to = "UTF-8"), stringsAsFactors = FALSE)
   result[[2]][, sapply(result[[2]], class) == 'character'] <- char_col
-  
   colnames(result[[2]]) <- iconv(colnames(result[[2]]), "latin1", "ASCII//TRANSLIT")
+  colnames(result[[2]]) <- iconv(colnames(result[[2]]), "ASCII//TRANSLIT", "UTF-8")
   
   #colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".f6.", replacement="o")
   #colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".e5.", replacement="a")
@@ -33,3 +34,4 @@ get_file<- function(x){
   
   return(result)
 }
+
