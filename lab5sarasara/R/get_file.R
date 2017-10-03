@@ -3,6 +3,7 @@
 #' @param x Number specifying which file to get where x is between 1 and 18 and of length one
 #' @return A list containing the file name and a data frame of the file
 
+
 get_file<- function(x){
   if(!(x %in% 1:18 && length(x)==1)) stop("argument x is invalid")
 
@@ -19,9 +20,6 @@ get_file<- function(x){
   path<-files[x]
   file<-paste(base, path, sep="")
   
-<<<<<<< HEAD
-  result<-list(file=file, table=readr::read_csv2(file, locale=readr::locale("se")))
-=======
   result<-list(file=file, table=utils::read.csv2(file, stringsAsFactors=FALSE))
   
   char_col <- result[[2]][, sapply(result[[2]], class) == 'character']
@@ -30,7 +28,6 @@ get_file<- function(x){
   result[[2]][, sapply(result[[2]], class) == 'character'] <- char_col
   colnames(result[[2]]) <- iconv(colnames(result[[2]]), "latin1", "ASCII//TRANSLIT")
   colnames(result[[2]]) <- iconv(colnames(result[[2]]), "ASCII//TRANSLIT", "UTF-8")
->>>>>>> a3a8c6e379c8a80311c1b8bbe728b05db8e53420
   
   #colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".f6.", replacement="o")
   #colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".e5.", replacement="a")
@@ -39,4 +36,3 @@ get_file<- function(x){
   return(result)
 }
 
-a<-get_file(1)[[2]]
