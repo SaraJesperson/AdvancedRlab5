@@ -19,7 +19,7 @@ get_file<- function(x){
   path<-files[x]
   file<-paste(base, path, sep="")
   
-  result<-list(file=file, table=utils::read.csv2(file, stringsAsFactors=FALSE))
+  result<-list(file=file, table=utils::read.csv2(file, stringsAsFactors=FALSE, encoding = 'UTF-8', fileEncoding = 'ISO8859-1'))
   
   #colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".f6.", replacement="o")
   #colnames(result[[2]])<-stringr::str_replace_all(colnames(result[[2]]), pattern=".e5.", replacement="a")
