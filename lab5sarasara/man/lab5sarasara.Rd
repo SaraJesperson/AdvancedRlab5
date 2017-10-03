@@ -6,7 +6,7 @@
 \alias{lab5sarasara-package}
 \title{Election results of the Swedish election 2014}
 \description{
-A package containing functions to investigate the election results of the Swedish election 2014
+A package containing a function to visually analyze the election results of the Swedish parliamentary election 2014
 }
 \author{
 Sara Jesperson and Sara Johansson

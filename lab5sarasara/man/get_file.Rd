@@ -4,14 +4,11 @@
 \alias{get_file}
 \title{Obtain election files}
 \usage{
-get_file(x)
-}
-\arguments{
-\item{x}{Number specifying which file to get where x is between 1 and 18 and of length one}
+get_file()
 }
 \value{
-A list containing the file name and a data frame of the file
+A data frame with the election result on municipality level
 }
 \description{
-A function to obtain election files from the Swedish election 2014
+A function to obtain election files from the Swedish parliamentary election 2014
 }

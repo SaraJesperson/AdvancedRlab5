@@ -4,15 +4,13 @@
 \alias{graph_election}
 \title{Plot the election results}
 \usage{
-graph_election(municipality, election_type)
+graph_election(municipality)
 }
 \arguments{
 \item{municipality}{The name of the municipality to plot}
-
-\item{election_type}{Type of election. Must be one of the following: "Riksdagsval", "Landstingsval" or "Kommunval"}
 }
 \value{
-A bar chart over the results in chosen municipality and the chosen election type
+A bar chart over the results in chosen municipality
 }
 \description{
 A function to plot the results from the Swedish election 2014 for a specific municipality in Sweden. 
