@@ -20,7 +20,7 @@ get_file<- function(x){
   path<-files[x]
   file<-paste(base, path, sep="")
   
-  result<-list(file=file, table=utils::read.csv2(file, stringsAsFactors=FALSE))
+  result<-list(file=file, table=utils::read.csv2(file, stringsAsFactors=FALSE, fileEncoding = "UTF-8"))
   
   char_col <- result[[2]][, sapply(result[[2]], class) == 'character']
   char_col <- apply(X = char_col, MARGIN = 2, FUN = iconv, from = "latin1", to = "ASCII//TRANSLIT")
