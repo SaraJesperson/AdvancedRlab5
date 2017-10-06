@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Vignette lab5sarasara"
+author: "Sara Jesperson and Sara Johansson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -12,67 +12,29 @@ vignette: >
 
 This package can be used to investigate the Swedish election 2014 in R. The package has functions to easily download files from the API of the Swedish election agency and also plot the election results in a chosen municipality.
 
-```{r,echo=FALSE}
-get_file<- function(){
+## Get the election results
 
-  links<-XML::getHTMLLinks("http://www.val.se/val/val2014/statistik/index.html")
-  file<-links[stringr::str_detect(links,".xls")]
-  file<- paste("http://www.val.se/val/val2014/statistik/", file[1], sep="")
-  
-  httr::GET(file, httr::write_disk(tf <- tempfile(fileext = ".xls")))
-  df <- readxl::read_excel(tf)
-  result<-df[3:nrow(df),]
-  colnames(result)<-df[2,]
-  
-  temp<-apply(result[,c(-3,-4)], MARGIN=2, as.numeric)
+The `get_file()` function is an easy way to download files from the Swedish election API containing the election results for the tree election types 2014. The function has one argument, x, and states which one of the three elections you want to investigate. You can only choose one type of election at a time and the argument has three allowed values:
+ 
+ * "Riksdagsval" is chosen if you want the results from the parliamentary elections
+ * "Landstingsval" is chosen if you want the results from the county elections
+ * "Kommunval" is chosen if you want the results from the municipal elections
+ 
+The results of the function is presented in a list. The first object is a string containing the the name of the election and the second object is a data frame containing the results.
+ 
+Below is an example of how the function can be used.
 
-  result[,c(-3,-4)]<-temp
-  
-  result<-data.frame(result,stringsAsFactors = FALSE)
-  
-  return(result)
-}
+```{r, comment=NA}
+election <- lab5sarasara::get_file(x = "Riksdagsval")
+
+election[[1]] # Name of election
+
+election[[2]][1:5,1:10] # Subset of the data
+
 ```
 
 
 ##Plot the election results
-
-```{r, echo=FALSE}
-graph_election <- function(municipality){
-  if(length(municipality)!=1) stop("argument must be of length 1")
-
-  y <- get_file()
-
-  if(!municipality %in% y$KOMMUN) stop("municipality argument is invalid")  
-  
-  y <- t(y[y$KOMMUN == municipality,
-           colnames(y) %in% c("M.proc","C.proc","FP.proc","KD.proc","S.proc","V.proc","MP.proc","SD.proc","FI.proc")])
-  
-  y <- data.frame(Party=c("Moderaterna",
-                          "Centerpartiet",
-                          "Folkpartiet",
-                          "Kristedemokraterna",
-                          "Socialdemokraterna",
-                          "Vansterpartiet",
-                          "Miljopartiet",
-                          "Sverigedemokraterna",
-                          "Feministiskt Initiativ"),
-                  Percent=y[,1])
-  
-  ggplot2::ggplot(data=y, ggplot2::aes(x=reorder(Party, Percent), y=Percent)) + 
-    ggplot2::geom_bar(stat="identity", fill="darkslategray4") +
-    ggplot2::coord_flip() +
-    ggplot2::theme_bw() +
-    ggplot2::labs(title=paste0("Election results 2014 in municipality ", municipality),
-         subtitle="Riksdagsval",
-         x="") +
-    ggplot2::theme(plot.title = ggplot2::element_text(hjust=0.5, size=16),
-          plot.subtitle = ggplot2::element_text(hjust = 0.5, size=14, face="italic"),
-          axis.text = ggplot2::element_text(size=12)
-    )
-}
-```
-
 
 The function `graph_election()` can be used to plot the results from the Swedish election 2014 for a specific municipality. The function generates a bar chart showing the percentages of the nine biggest parties in Sweden. The function has two arguments: municipality and election_type.
 
@@ -87,7 +49,7 @@ The argumnet election_type states which one of the three elections you want to i
 Below is an example where the results in the municipal election in Motala 2014.
 
 ```{r,message=FALSE, warning=FALSE, fig.align='center', fig.height=4, fig.width=7}
- graph_election(municipality="Motala")
+ lab5sarasara::graph_election(municipality="Motala", election_type = "Kommunval")
 ```
 
-#####Now you have all the necessary knowledge to get started with the lab5sarasara package. Have fun!
+######Now you have all the necessary knowledge to get started with the lab5sarasara package. Have fun!
