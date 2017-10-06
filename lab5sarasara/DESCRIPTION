@@ -1,7 +1,7 @@
 Package: lab5sarasara
 Type: Package
 Title: Election results of the Swedish election 2014
-Version: 0.0.1
+Version: 1.0
 Date: 2017-09-25
 Author: Sara Jesperson [aut, cre],
         Sara Johansson [aut, cre]
