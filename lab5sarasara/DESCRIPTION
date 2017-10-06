@@ -6,7 +6,8 @@ Date: 2017-09-25
 Author: Sara Jesperson [aut, cre],
         Sara Johansson [aut, cre]
 Maintainer: Sara Jesperson <sarje110@student.liu.se>
-Description: A package containing a function to visually analyze the election results of the Swedish parliamentary election 2014.
+Description: A package containing a function to download results of the Swedish election 2014. 
+             There's also a function to visualize the election results for a chosen municipality.
 License: GPL-2
 Imports: XML, stringr, httr, readxl
 Suggests: ggplot2, 

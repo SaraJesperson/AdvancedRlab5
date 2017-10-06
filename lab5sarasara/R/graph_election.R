@@ -1,14 +1,16 @@
 #' @title Plot the election results
-#' @description A function to plot the results from the Swedish election 2014 for a specific municipality in Sweden. 
+#' @description A function to plot the results from the Swedish election 2014 for a specific election type and municipality in Sweden. 
 #' Only the nine biggest parties in Sweden are plotted
 #' @param municipality The name of the municipality to plot
+#' @param election_type Type of election. Must be one of the following: "Riksdagsval", "Landstingsval" or "Kommunval"
 #' @return A bar chart over the results in chosen municipality
 #' @export graph_election
 
-graph_election <- function(municipality){
-  if(length(municipality)!=1) stop("argument must be of length 1")
+graph_election <- function(municipality, election_type){
+  if(length(election_type)!=1 || length(municipality)!=1) stop("argument(s) must be of length 1")
+  if(!(election_type %in% c("Riksdagsval", "Landstingsval", "Kommunval"))) stop("election_type argument is invalid")
 
-  y <- get_file()
+  y <- get_file(election_type)[[2]]
 
   if(!municipality %in% y$KOMMUN) stop("municipality argument is invalid")  
   
@@ -31,10 +33,11 @@ graph_election <- function(municipality){
     ggplot2::coord_flip() +
     ggplot2::theme_bw() +
     ggplot2::labs(title=paste0("Election results 2014 in municipality ", municipality),
-         subtitle="Riksdagsval",
-         x="") +
+         subtitle=election_type,
+         x="", y="Percent") +
     ggplot2::theme(plot.title = ggplot2::element_text(hjust=0.5, size=16),
           plot.subtitle = ggplot2::element_text(hjust = 0.5, size=14, face="italic"),
           axis.text = ggplot2::element_text(size=12)
     )
 }
+
